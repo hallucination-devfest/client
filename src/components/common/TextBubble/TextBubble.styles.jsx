@@ -13,8 +13,8 @@ export const Container = styled.div`
         right: 80%;
         transform: translateX(50%) scaleX(-1);
       `}
-  width: 240px;
-  height: 140px;
+  width: 290px;
+  height: 170px;
   background-image: url("/text_bubble.png");
   background-size: contain;
   background-repeat: no-repeat;

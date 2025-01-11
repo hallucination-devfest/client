@@ -13,12 +13,14 @@ import {
   updateHasClicked,
   updateAgentSelectionComplete,
 } from "../../redux/gameSlice";
+import { FailModal } from "../../components/main/FailModal";
 
 const API_URL = import.meta.env.VITE_AI_API_URL;
 const BACKEND_URL = import.meta.env.VITE_BACKEND_SERVER_URL;
 
 function GameMainPage() {
   const dispatch = useDispatch();
+  const [failModalState, setFailModalState] = useState(false);
   const agents = useSelector((state) => state.game.agents);
   const currentRound = useSelector((state) => state.game.currentRound);
   const category = useSelector((state) => state.game.category);
@@ -118,6 +120,8 @@ function GameMainPage() {
       const chatContent = await fetchAgentResponse(agentId);
       if (chatContent) {
         dispatch(updateChat({ agentId, message: chatContent }));
+      } else {
+        setFailModalState(true);
       }
 
       setTimeout(() => {
@@ -194,7 +198,7 @@ function GameMainPage() {
             setModalState={setGuideModalState}
           />
         )}
-
+        {failModalState && <FailModal setModalState={setFailModalState} />}
         <S.BottomLayout>
           <S.BottomContent>채팅 횟수: {remainingChats}회</S.BottomContent>
           <S.InfoIcon
