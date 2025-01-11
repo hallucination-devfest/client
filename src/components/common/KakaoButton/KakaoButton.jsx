@@ -11,9 +11,8 @@ export default function KakaoButton() {
         // 토큰 저장
         localStorage.setItem("accessToken", event.data.data.accessToken);
         localStorage.setItem("refreshToken", event.data.data.refreshToken);
-
-        // 게임 페이지로 이동
-        navigate("/game");
+        localStorage.setItem("isLogin", "true");
+        window.dispatchEvent(new Event("storage"));
       } else if (event.data.type === "SOCIAL_LOGIN_ERROR") {
         console.error("소셜 로그인 실패:", event.data.error);
         console.log(event.data);

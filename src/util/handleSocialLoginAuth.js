@@ -1,5 +1,6 @@
 import { sendRequest } from "../api/request";
 import { defaultInstance } from "../api/instance";
+import { fetchUserName } from "../api/user";
 
 const handleSocialAuth = async (code) => {
   try {
@@ -16,6 +17,7 @@ const handleSocialAuth = async (code) => {
 
     if (response.data.success) {
       // 원래 창으로 메시지 전송
+
       if (window.opener) {
         window.opener.postMessage(
           {
@@ -28,6 +30,7 @@ const handleSocialAuth = async (code) => {
           "*"
         );
         // 현재 창 닫기
+
         window.close();
       } else {
         console.error("opener window not found");
