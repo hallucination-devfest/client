@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store.jsx";
 import MainPage from "./pages/main/MainPage.jsx";
 import GameMainPage from "./pages/GameMain/GameMainPage.jsx";
+import ChattingPage from "./pages/Chatting/ChattingPage.jsx";
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -27,6 +28,7 @@ function App() {
               <Route path="/" element={<MainPage />} />
               <Route path="/main" element={<MainPage />} />
               <Route path="/game" element={<GameMainPage />} />
+              <Route path="/chatting" element={<ChattingPage />} />
             </Routes>
           </BrowserRouter>
         </Provider>

@@ -15,6 +15,7 @@ const colors = {
   kakao1: "#FAE100",
   kakao2: "#371D1E",
   yellow: "#FCCA00",
+  chatting: "#363761",
 };
 
 const fontSizes = {

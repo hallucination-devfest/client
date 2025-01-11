@@ -74,4 +74,6 @@ export const BottomContent = styled.p`
   text-align: center;
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fontSizes.md};
+  padding: 30px;
+  position: relative;
 `;

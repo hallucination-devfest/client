@@ -6,73 +6,82 @@ const initialState = {
       id: 1,
       name: "ACE",
       image: "/agents/ACE.png",
-      chattings: [],
+      currentChat: "",
       isLiar: false,
+      zIndex: 1,
     },
     {
       id: 2,
       name: "AIDEN",
       image: "/agents/AIDEN.png",
-      chattings: [],
+      currentChat: "",
       isLiar: false,
+      zIndex: 1,
     },
     {
       id: 3,
       name: "ALEX",
       image: "/agents/ALEX.png",
-      chattings: [],
+      currentChat: "",
       isLiar: false,
+      zIndex: 1,
     },
     {
       id: 4,
       name: "ANDEW",
       image: "/agents/ANDEW.png",
-      chattings: [],
+      currentChat: "",
       isLiar: false,
+      zIndex: 1,
     },
     {
       id: 5,
       name: "CHLOE",
       image: "/agents/CHLOE.png",
-      chattings: [],
+      currentChat: "",
       isLiar: false,
+      zIndex: 1,
     },
     {
       id: 6,
       name: "CINDY",
       image: "/agents/CINDY.png",
-      chattings: [],
+      currentChat: "",
       isLiar: false,
+      zIndex: 1,
     },
     {
       id: 7,
       name: "JACE",
       image: "/agents/JACE.png",
-      chattings: [],
+      currentChat: "",
       isLiar: false,
+      zIndex: 1,
     },
     {
       id: 8,
       name: "MARK",
-      image: "/agents/Mark.png",
+      image: "/agents/MARK.png",
       chattings: [],
       isLiar: false,
+      zIndex: 1,
     },
   ],
   remainingChats: 3,
   currentRound: 1,
   category: "장소",
+  maxZIndex: 1,
 };
 
 export const gameSlice = createSlice({
   name: "game",
   initialState,
   reducers: {
-    addChatting: (state, action) => {
+    updateChat: (state, action) => {
       const { agentId, message } = action.payload;
       const agent = state.agents.find((a) => a.id === agentId);
       if (agent) {
-        agent.chattings.push(message);
+        agent.currentChat = message;
       }
     },
     decreaseRemainingChats: (state) => {
@@ -98,23 +107,32 @@ export const gameSlice = createSlice({
         agent.image = image;
       }
     },
-    clearChattings: (state, action) => {
+    clearChat: (state, action) => {
       const { agentId } = action.payload;
       const agent = state.agents.find((a) => a.id === agentId);
       if (agent) {
-        agent.chattings = [];
+        agent.currentChat = "";
+      }
+    },
+    updateZIndex: (state, action) => {
+      const { agentId } = action.payload;
+      state.maxZIndex += 1;
+      const agent = state.agents.find((a) => a.id === agentId);
+      if (agent) {
+        agent.zIndex = state.maxZIndex;
       }
     },
   },
 });
 
 export const {
-  addChatting,
+  updateChat,
   decreaseRemainingChats,
   setLiarAgent,
   resetGame,
   updateAgentInfo,
-  clearChattings,
+  clearChat,
+  updateZIndex,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

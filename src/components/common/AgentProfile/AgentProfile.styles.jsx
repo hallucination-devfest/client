@@ -7,6 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative; // 자식 요소의 absolute 기준점이 됨
 `;
 
 export const ImageContainer = styled.div`

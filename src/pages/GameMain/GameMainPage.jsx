@@ -1,13 +1,15 @@
-import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import * as S from "./GameMainPage.styles";
 import InfoModal from "../../components/gameMain/Modal/InfoModal";
 import GuideModal from "../../components/gameMain/Modal/GuideModal";
 import ChoiceModal from "../../components/gameMain/Modal/ChoiceModal";
 import AgentProfile from "../../components/common/AgentProfile/AgentProfile";
 import ResultModal from "../../components/gameMain/Modal/ResultModal";
+import { updateChat, clearChat, updateZIndex } from "../../redux/gameSlice";
+
 function GameMainPage() {
-  // Redux store에서 필요한 상태들을 가져옵니다
+  const dispatch = useDispatch();
   const agents = useSelector((state) => state.game.agents);
   const currentRound = useSelector((state) => state.game.currentRound);
   const category = useSelector((state) => state.game.category);
@@ -22,6 +24,15 @@ function GameMainPage() {
     setChoiceModalState(false);
     setResultModalState(true);
   };
+  const handleAgentClick = (agentId) => {
+    dispatch(updateZIndex({ agentId }));
+    dispatch(updateChat({ agentId, message: "test123" }));
+
+    setTimeout(() => {
+      dispatch(clearChat({ agentId }));
+    }, 3000);
+  };
+
   return (
     <>
       <S.Container>
@@ -41,15 +52,19 @@ function GameMainPage() {
         </S.Description>
         <S.GridWrapper>
           <S.GridLayout>
-            {agents.map((agent) => (
+            {agents.map((agent, idx) => (
               <AgentProfile
                 key={agent.id}
                 agentName={agent.name}
                 imgSrc={agent.image}
-                onClick={() => {
-                  setChoiceModalState(true);
-                  setSelectedAgentName(agent.name);
-                }}
+                // onClick={() => {
+                //   setChoiceModalState(true);
+                //   setSelectedAgentName(agent.name);
+                // }}
+                currentChat={agent.currentChat}
+                agentIdx={idx}
+                onClick={() => handleAgentClick(agent.id)}
+                zIndex={agent.zIndex}
               />
             ))}
           </S.GridLayout>
