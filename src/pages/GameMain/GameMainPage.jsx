@@ -14,7 +14,7 @@ import {
   updateAgentSelectionComplete,
 } from "../../redux/gameSlice";
 
-const API_URL = import.meta.env.VITE_AI_API_URL + "/ligent/introduce";
+const API_URL = import.meta.env.VITE_AI_API_URL;
 const BACKEND_URL = import.meta.env.VITE_BACKEND_SERVER_URL;
 
 function GameMainPage() {
