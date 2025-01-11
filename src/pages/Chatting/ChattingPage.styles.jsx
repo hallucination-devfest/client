@@ -31,10 +31,10 @@ export const Subtitle = styled.div`
 export const TopBar = styled.div`
   width: 100%;
   height: 40px;
-  color: "pink";
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
 
 export const TopBarTitle = styled.div`
