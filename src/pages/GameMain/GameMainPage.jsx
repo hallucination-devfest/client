@@ -38,7 +38,7 @@ function GameMainPage() {
   const fetchAgentResponse = async (agentId) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      const response = await fetch(API_URL, {
+      const response = await fetch(`${API_URL}/ligent/introduce`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -179,7 +179,7 @@ function GameMainPage() {
           <ResultModal
             modalState={resultModalState}
             setModalState={setResultModalState}
-            result={selectionResult ? "success" : "fail"}
+            result={selectionResult ? "success" : "failed"}
             name={selectedAgentName}
           />
         )}

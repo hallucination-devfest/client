@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import * as S from "./ResultModal.styles";
 import Modal from "../../common/Modal/Modal";
-import AgentProfile from "../../common/AgentProfile/AgentProfile";
 import AnswerModal from "./AnswerModal";
+import AgentMiniProfile from "../../common/AgentProfile/AgentMiniProfile";
 
 const Content = ({ result, name, inputValue, setInputValue }) => {
   console.log("hi");
@@ -12,11 +12,10 @@ const Content = ({ result, name, inputValue, setInputValue }) => {
         src={result === "success" ? "/censoredStamp.png" : "/failedStamp.png"}
         alt="stamp"
       />
-      <AgentProfile
+      <AgentMiniProfile
         imgSrc={`/agents/${name}.png`}
         agentName={name}
         color="black"
-        disableClickMessage={true}
       />
       {result === "success" && (
         <>

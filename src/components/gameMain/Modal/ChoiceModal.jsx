@@ -1,19 +1,18 @@
 import React from "react";
 import * as S from "./ChoiceModal.styles";
 import Modal from "../../common/Modal/Modal";
-import AgentProfile from "../../common/AgentProfile/AgentProfile";
 import { useNavigate } from "react-router-dom";
+import AgentMiniProfile from "../../common/AgentProfile/AgentMiniProfile";
 
 function ChoiceModal({ modalState, setModalState, name, onPick }) {
   const navigate = useNavigate();
   const Content = () => {
     return (
       <S.Content>
-        <AgentProfile
+        <AgentMiniProfile
           imgSrc={`/agents/${name}.png`}
           agentName={name}
           color="black"
-          disableClickMessage={true}
         />
         <p>
           {name}를 선택하셨습니다. <br />
@@ -29,7 +28,7 @@ function ChoiceModal({ modalState, setModalState, name, onPick }) {
           type="choice"
           onChat={() =>
             navigate("/chatting", {
-              state: { agentName: name }, 
+              state: { agentName: name },
             })
           }
           onPick={onPick}

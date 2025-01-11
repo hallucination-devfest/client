@@ -60,8 +60,9 @@ export const Button = styled.button`
 export const SpecialTitle = styled.h1`
   font-size: 22px;
   font-weight: bold;
-  font-family: Pretendard;
-  color: yellow;
+  font-family: "Press Start 2P";
+  color: ${({ theme }) => theme.colors.yellow};
+  -webkit-text-stroke: 1px black;
 `;
 
 export const CloseButton = styled.img`

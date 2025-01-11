@@ -16,7 +16,8 @@ export const Content = styled.div`
 
 export const Stamp = styled.img`
   position: absolute;
-  width: 200px;
+  width: 150px;
+  z-index: 100000;
 `;
 
 export const Input = styled.input`

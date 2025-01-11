@@ -4,7 +4,7 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.indigo1};
   width: 100%;
   height: 100%;
-
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
 `;
@@ -29,12 +29,12 @@ export const Subtitle = styled.div`
 `;
 
 export const TopBar = styled.div`
-    width: 100%;
-    height: 40px;
-    color: 'pink';
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  height: 40px;
+  color: "pink";
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const TopBarTitle = styled.div`
@@ -52,14 +52,13 @@ export const TopBarBack = styled.div`
 `;
 
 export const CharacterSpace = styled.div`
-    width: 100%;
-    height: 180px;
-    background-color: 'yellow';
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    
+  width: 100%;
+  height: 180px;
+  background-color: "yellow";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const CharacterName = styled.div`
@@ -70,63 +69,57 @@ export const CharacterName = styled.div`
 `;
 
 export const ChattingSpace = styled.div`
-    width: 100%;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    padding-left: 20px;
-    padding-right: 20px;
-    overflow-y: auto;
-    //background-color: yellow;
+  width: 100%;
+  flex-grow: 1; /* 남은 공간을 채움 */
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow-y: auto;
 `;
 
 export const MyChat = styled.div`
-    max-width: 80%;
-    min-height: 30px;
-    background-color: black;
-    border-radius: 15px;
-    color: white;
-    font-size: 15px;
-    align-items: center;
-    //justify-content: flex-end;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 12px;
-    margin-left: auto;
-    line-height: 1.6;
+  max-width: 80%;
+  background-color: black;
+  border-radius: 15px;
+  color: white;
+  font-size: 15px;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 12px;
+  margin-left: auto;
+  line-height: 1.6;
 `;
 
 export const AIChat = styled.div`
-    max-width: 80%;
-    min-height: 30px;
-    background-color: white;
-    border-radius: 15px;
-    color: black;
-    font-size: 15px;
-    align-items: start;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 12px;
-    line-height: 1.5;
+  max-width: 80%;
+  background-color: white;
+  border-radius: 15px;
+  color: black;
+  font-size: 15px;
+  align-items: start;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 12px;
+  line-height: 1.5;
 `;
 
 export const BottemSpace = styled.div`
-    width: 100%;
-    height: 120px;
-    display: flex;
+  width: 100%;
+  height: 120px;
+  display: flex;
 `;
 
 export const TextInputSpace = styled.div`
-    width: 100%;
-    height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    bottom: 20px;
-    padding: 20px;
-    flex-direction: column;
-    //background-color: yellow;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  position: relative;
+  background-color: ${({ theme }) => theme.colors.indigo1};
+  padding-top: 20px;
 `;
 
 export const BottomLayout = styled.div`
@@ -137,45 +130,48 @@ export const BottomLayout = styled.div`
   padding: 30px;
   display: flex;
   position: absolute;
+  bottom: 40px;
   left: 10px;
+  font-size: 14px;
 `;
 
 export const TextInputBox = styled.div`
-    width: 100%;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    bottom: 0px;
-    padding: 20px;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  bottom: 0px;
+  padding: 20px;
 `;
 
 export const TextInput = styled.input`
-    width: 85%;
-    height: 40px; 
-    padding: 8px 12px; 
-    font-size: 16px; 
-    border-radius: 50px; 
-    outline: none; 
-    transition: all 0.3s ease-in-out; 
-    background-color: ${({ theme }) => theme.colors.chatting};
-    color: white;
+  width: 85%;
+  height: 40px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  background-color: ${({ theme }) => theme.colors.chatting};
+  color: white;
 
-    &:focus {
-        //border-color: #007BFF; /* 포커스 시 테두리 색 변경 */
-        //box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3); /* 포커스 시 그림자 강조 */
-    }
+  &:focus {
+    //border-color: #007BFF; /* 포커스 시 테두리 색 변경 */
+    //box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3); /* 포커스 시 그림자 강조 */
+  }
 
-    &::placeholder {
-        color: #FFF; 
-        font-size: 14px;
-    }
+  &::placeholder {
+    color: #fff;
+    font-size: 14px;
+  }
 `;
 
 export const SendImage = styled.img`
-    width: 25px; 
-    height: 25px; 
-    object-fit: contain; 
-    margin-right: 10px;
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  margin-right: 10px;
 `;
