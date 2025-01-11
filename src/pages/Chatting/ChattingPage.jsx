@@ -195,12 +195,16 @@ function ChattingPage() {
             onChange={(e) => setUserInput(e.target.value)}
             onKeyPress={handleInputKeyPress}
             placeholder={
-              isLoading ? "응답을 기다리는 중..." : "캐릭터에게 질문하세요!"
+              isLoading
+                ? "응답을 기다리는 중..."
+                : remainingChats === 0
+                ? "질문 기회가 모두 소진되었습니다."
+                : "캐릭터에게 질문하세요!"
             }
             disabled={isLoading || remainingChats <= 0}
           />
           <S.SendImage
-            src="../../../public/submit.png"
+            src="/submit.png"
             alt="Send Image"
             onClick={handleSendMessage}
             style={{

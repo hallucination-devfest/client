@@ -38,12 +38,11 @@ export default function Modal({
           <S.ContentContainer>
             <S.SpecialTitle>{title}</S.SpecialTitle>
             <S.Content>{content}</S.Content>
-            {title==="YOU WIN!" ? 
-            <S.Button onClick={handleNext}>입력하기</S.Button>
-            :
-            <S.Button onClick={handleNext}>확인하기</S.Button>
-            }
-            
+            {title === "YOU WIN!" ? (
+              <S.Button onClick={handleNext}>입력하기</S.Button>
+            ) : (
+              <S.Button onClick={handleNext}>확인하기</S.Button>
+            )}
           </S.ContentContainer>
         )}
         {type === "guess" && (
