@@ -41,11 +41,17 @@ export const Description = styled.div`
   line-height: 150%; /* 21px */
 `;
 
-export const GridLayout = styled.div`
+export const GridWrapper = styled.div`
   margin: 0 auto;
   width: 95%;
   flex: 1;
+`;
+
+export const GridLayout = styled.div`
+  width: 100%;
+  height: 100%;
   display: grid;
+  align-items: baseline;
   grid-template-columns: repeat(2, 1fr);
 `;
 
