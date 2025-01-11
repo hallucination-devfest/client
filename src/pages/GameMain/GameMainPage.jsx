@@ -66,7 +66,7 @@ function GameMainPage() {
           <ResultModal
             modalState={resultModalState}
             setModalState={setResultModalState}
-            result="failed"
+            result="success"
             name={selectedAgentName}
           />
         )}
