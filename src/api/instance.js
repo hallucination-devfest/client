@@ -4,12 +4,20 @@ import { applyInterceptors } from "./interceptor";
 // .env로 숨긴 URL 주소
 // eslint-disable-next-line no-undef
 const BASE_URL = import.meta.env.VITE_BACKEND_SERVER_URL;
+const AI_BASE_URL = import.meta.env.VITE_AI_SERVER_URL;
 
 // Axios 기본 인스턴스
 const defaultInstance = axios.create({
   baseURL: BASE_URL,
   withCredentials: true, // Refresh 토큰 처리를 위한 옵션
 });
+
+const aiInstance = axios.create({
+  baseURL: AI_BASE_URL,
+  withCredentials: true, // Refresh 토큰 처리를 위한 옵션
+});
+
+applyInterceptors(aiInstance);
 
 // 추가 API 인스턴스
 const createInstance = (baseInstance, path) => {
@@ -20,5 +28,7 @@ const createInstance = (baseInstance, path) => {
 
 const roomsInstance = createInstance(defaultInstance, "/rooms");
 applyInterceptors(roomsInstance);
+const userInstance = createInstance(defaultInstance, "/users");
+applyInterceptors(userInstance);
 
-export { defaultInstance, roomsInstance };
+export { defaultInstance, roomsInstance, userInstance, aiInstance };
