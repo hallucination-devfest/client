@@ -13,6 +13,7 @@ function ChoiceModal({ modalState, setModalState, name, onPick }) {
           imgSrc={`/agents/${name}.png`}
           agentName={name}
           color="black"
+          disableClickMessage={true}
         />
         <p>
           {name}를 선택하셨습니다. <br />
