@@ -13,18 +13,8 @@ export default function AgentProfile({
   zIndex,
   hasClicked,
 }) {
-  const [hasClicked, setHasClicked] = useState(disableClickMessage);
-  const [showBubble, setShowBubble] = useState(false); // TextBubble 표시 상태
-
   const handleClick = () => {
-    if (!disableClickMessage) {
-      setHasClicked(true);
-    }
     if (onClick) onClick();
-
-    // TextBubble 표시 토글
-    setShowBubble(true);
-    setTimeout(() => setShowBubble(false), 3000); // 3초 후 사라짐
   };
 
   return (
