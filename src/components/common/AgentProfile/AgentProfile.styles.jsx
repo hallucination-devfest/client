@@ -12,7 +12,7 @@ export const Container = styled.div`
 
 export const ImageContainer = styled.div`
   object-fit: contain;
-  height: 100px;
+  height: 80px;
   > img {
     width: 100%;
     height: 100%;
