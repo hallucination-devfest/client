@@ -27,12 +27,18 @@ function GameMainPage() {
                 key={agent.id}
                 agentName={agent.name}
                 imgSrc={agent.image}
+                currentChat="안녕"
               />
             ))}
           </S.GridLayout>
         </S.GridWrapper>
 
-        <S.BottomLayout>채팅 횟수: {remainingChats}회</S.BottomLayout>
+        <S.BottomLayout>
+          채팅 횟수: {remainingChats}회
+          <S.BottomInfoIcon>
+            <img src="/info_icon.svg" />
+          </S.BottomInfoIcon>
+        </S.BottomLayout>
       </S.Container>
     </>
   );
