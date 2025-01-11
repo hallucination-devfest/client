@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import * as S from "./ChattingPage.styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { decreaseRemainingChats } from "../../redux/gameSlice";
 import AgentMiniProfile from "../../components/common/AgentProfile/AgentMiniProfile";
 
 const API_URL = import.meta.env.VITE_BACKEND_SERVER_URL;
@@ -11,20 +12,35 @@ function ChattingPage() {
   const location = useLocation();
   const agentName = location.state?.agentName;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const chattingSpaceRef = useRef(null);
 
   const agents = useSelector((state) => state.game.agents);
   const currentRound = useSelector((state) => state.game.currentRound);
   const category = useSelector((state) => state.game.category);
   const remainingChats = useSelector((state) => state.game.remainingChats);
+  const roomId = useSelector((state) => state.game.roomId);
 
   const specificAgent = agents.find((agent) => agent.name === agentName);
 
   const [userInput, setUserInput] = useState("");
-  const [chatHistory, setChatHistory] = useState([]); // 채팅 내용을 저장하는 상태
+  const [chatHistory, setChatHistory] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const roomId = useSelector((state) => state.game.roomId);
-  // const roomId = 9;
+  const characterList = [
+    { characterId: 1, characterName: "MARK" },
+    { characterId: 2, characterName: "CHLOE" },
+    { characterId: 3, characterName: "AIDEN" },
+    { characterId: 4, characterName: "ACE" },
+    { characterId: 5, characterName: "ANDEW" },
+    { characterId: 6, characterName: "CINDY" },
+    { characterId: 7, characterName: "ALEX" },
+    { characterId: 8, characterName: "JACE" },
+  ];
+
+  const characterData = characterList.find(
+    (character) => character.characterName === agentName
+  );
 
   useEffect(() => {
     chattingSpaceRef.current.scrollTop = chattingSpaceRef.current.scrollHeight;
@@ -59,9 +75,9 @@ function ChattingPage() {
               { type: "user", message: chat.question },
               { type: "ai", message: chat.answer },
             ])
-            .flat(); // 채팅을 병합
+            .flat();
 
-          setChatHistory(formattedChatHistory); // 채팅 내용을 상태에 저장
+          setChatHistory(formattedChatHistory);
         }
       } catch (error) {
         console.error("GET 요청 중 오류 발생:", error);
@@ -69,35 +85,22 @@ function ChattingPage() {
     };
 
     fetchData();
-  }, []);
-
-  const characterList = [
-    { characterId: 1, characterName: "MARK" },
-    { characterId: 2, characterName: "CHLOE" },
-    { characterId: 3, characterName: "AIDEN" },
-    { characterId: 4, characterName: "ACE" },
-    { characterId: 5, characterName: "ANDEW" },
-    { characterId: 6, characterName: "CINDY" },
-    { characterId: 7, characterName: "ALEX" },
-    { characterId: 8, characterName: "JACE" },
-  ];
-
-  const characterData = characterList.find(
-    (character) => character.characterName === agentName
-  );
+  }, [roomId, characterData?.characterId]);
 
   const handleBack = () => {
     navigate(-1);
   };
 
   const handleSendMessage = async () => {
-    if (!userInput.trim()) {
-      return; // 입력값이 없으면 아무 작업도 하지 않음
+    if (!userInput.trim() || isLoading) {
+      return;
     }
 
-    console.log(roomId);
-    console.log(characterData.characterId);
-    console.log(userInput);
+    if (remainingChats <= 0) {
+      alert("남은 채팅 횟수가 없습니다.");
+      return;
+    }
+
     try {
       if (!roomId) {
         console.error("해당 agentName에 맞는 roomId가 없습니다.");
@@ -111,12 +114,23 @@ function ChattingPage() {
         return;
       }
 
+      setIsLoading(true);
+      dispatch(decreaseRemainingChats());
+
+      // 사용자 메시지를 즉시 표시
+      const userMessage = userInput;
+      setUserInput(""); // 입력창 초기화
+      setChatHistory((prev) => [
+        ...prev,
+        { type: "user", message: userMessage },
+      ]);
+
       const response = await axios.post(
         "https://proma-ai.store/ligent/interview",
         {
           roomId: roomId,
           characterId: characterData.characterId,
-          question: userInput,
+          question: userMessage,
         },
         {
           headers: {
@@ -125,19 +139,20 @@ function ChattingPage() {
         }
       );
 
-      console.log("서버 응답:", response.data);
-
       const aiResponse = response.data.responseDto.answer || "응답 없음";
-
-      setChatHistory((prev) => [
-        ...prev,
-        { type: "user", message: userInput },
-        { type: "ai", message: aiResponse },
-      ]);
-
-      setUserInput(""); // 입력창 초기화
+      setChatHistory((prev) => [...prev, { type: "ai", message: aiResponse }]);
     } catch (error) {
       console.error("POST 요청 중 오류 발생:", error);
+      alert("메시지 전송에 실패했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleInputKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
     }
   };
 
@@ -178,12 +193,21 @@ function ChattingPage() {
           <S.TextInput
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
-            placeholder=" 캐릭터에게 질문하세요!"
+            onKeyPress={handleInputKeyPress}
+            placeholder={
+              isLoading ? "응답을 기다리는 중..." : "캐릭터에게 질문하세요!"
+            }
+            disabled={isLoading || remainingChats <= 0}
           />
           <S.SendImage
             src="../../../public/submit.png"
             alt="Send Image"
             onClick={handleSendMessage}
+            style={{
+              opacity: isLoading || remainingChats <= 0 ? 0.5 : 1,
+              cursor:
+                isLoading || remainingChats <= 0 ? "not-allowed" : "pointer",
+            }}
           />
         </S.TextInputBox>
       </S.TextInputSpace>
