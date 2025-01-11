@@ -19,19 +19,38 @@ function GameMainPage() {
   const [choiceModalState, setChoiceModalState] = useState(false);
   const [selectedAgentName, setSelectedAgentName] = useState("");
   const [resultModalState, setResultModalState] = useState(false);
+  const [guideModalState, setGuideModalState] = useState(false); 
+  const [clickedAgents, setClickedAgents] = useState(new Set()); 
+  const [isTimeoutComplete, setIsTimeoutComplete] = useState(false); 
 
   const agentPick = () => {
     setChoiceModalState(false);
     setResultModalState(true);
   };
   const handleAgentClick = (agentId) => {
-    dispatch(updateZIndex({ agentId }));
-    dispatch(updateChat({ agentId, message: "test123" }));
-
-    setTimeout(() => {
-      dispatch(clearChat({ agentId }));
-    }, 3000);
+    if (!isTimeoutComplete) {
+      if (clickedAgents.has(agentId)) {
+        return;
+      }
+  
+      setClickedAgents((prev) => new Set(prev).add(agentId));
+      dispatch(updateZIndex({ agentId }));
+      dispatch(updateChat({ agentId, message: "test123" }));
+  
+      setTimeout(() => {
+        dispatch(clearChat({ agentId }));
+  
+        if (clickedAgents.size + 1 === agents.length) {
+          setGuideModalState(true);
+          setIsTimeoutComplete(true); 
+        }
+      }, 3000);
+    } else {
+      setChoiceModalState(true);
+      setSelectedAgentName(agents.find((agent) => agent.id === agentId)?.name);
+    }
   };
+  
 
   return (
     <>
@@ -58,12 +77,13 @@ function GameMainPage() {
                 agentName={agent.name}
                 imgSrc={agent.image}
                 onClick={() => {
-                  setChoiceModalState(true);
+                  //setChoiceModalState(true);
+                  handleAgentClick(agent.id)
                   setSelectedAgentName(agent.name);
                 }}
                 currentChat={agent.currentChat}
                 agentIdx={idx}
-                // onClick={() => handleAgentClick(agent.id)}
+                //onClick={() => handleAgentClick(agent.id)}
                 zIndex={agent.zIndex}
               />
             ))}
@@ -85,6 +105,13 @@ function GameMainPage() {
             name={selectedAgentName}
           />
         )}
+        {guideModalState && (
+          <GuideModal
+            modalState={guideModalState}
+            setModalState={setGuideModalState}
+          />
+        )}
+
 
         <S.BottomLayout>
           <S.BottomContent>채팅 횟수: {remainingChats}회</S.BottomContent>

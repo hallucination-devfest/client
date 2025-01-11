@@ -1,15 +1,22 @@
 import React from "react";
 import * as S from "./ChattingPage.styles";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import AgentProfile from "../../components/common/AgentProfile/AgentProfile";
 
 function ChattingPage() {
+    const navigate = useNavigate();
+
     const agents = useSelector((state) => state.game.agents);
     const currentRound = useSelector((state) => state.game.currentRound);
     const category = useSelector((state) => state.game.category);
     const remainingChats = useSelector((state) => state.game.remainingChats);
 
     const specificAgent = agents.find((agent) => agent.name === "MARK");
+
+    const handleBack = () => {
+        navigate(-1);
+      };
 
     return (
         <S.Container>
@@ -18,7 +25,7 @@ function ChattingPage() {
                 <S.Subtitle>카테고리: {category}</S.Subtitle>
             </S.TopLayout>
             <S.TopBar>
-                <S.TopBarBack>&lt;</S.TopBarBack>
+                <S.TopBarBack onClick={handleBack}>&lt;</S.TopBarBack>
                 <S.TopBarTitle>Chatting</S.TopBarTitle>
             </S.TopBar>
             <S.CharacterSpace>
@@ -27,6 +34,7 @@ function ChattingPage() {
                     key={specificAgent.id}
                     agentName={specificAgent.name}
                     imgSrc={specificAgent.image}
+                    disableClickMessage = {true}
                 />
                 )}
             </S.CharacterSpace>
