@@ -43,7 +43,11 @@ export const Title = styled.h1`
   word-break: keep-all;
 `;
 
-export const Content = styled.div``;
+export const Content = styled.div`
+  text-align: center;
+  line-height: 150%;
+  word-break: keep-all;
+`;
 
 export const Button = styled.button`
   display: flex;
@@ -63,11 +67,8 @@ export const SpecialTitle = styled.h1`
   font-family: "Press Start 2P";
   border: 5px;
   border-color: black;
-  color: #FFDE5B;
-  text-shadow: 
-    -2.5px -2.5px 0 black, 
-    2.5px -2.5px 0 black, 
-    -2.5px 2.5px 0 black, 
+  color: #ffde5b;
+  text-shadow: -2.5px -2.5px 0 black, 2.5px -2.5px 0 black, -2.5px 2.5px 0 black,
     2.5px 2.5px 0 black;
 `;
 

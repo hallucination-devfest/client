@@ -11,6 +11,10 @@ import {
 export const createRoom = () => async (dispatch) => {
   try {
     const response = await sendRequest(roomsInstance, "post", "");
+    if (!response.data.success) {
+      return { success: "false" };
+    }
+
     const roomId = response.data.data.roomId;
     const roundId = response.data.data.round;
     const category = response.data.data.category;
@@ -22,9 +26,9 @@ export const createRoom = () => async (dispatch) => {
     dispatch(updateCurrentCategory({ message: category }));
     dispatch(setRemainingChats({ message: remainingChats }));
 
-    return response.data.data;
+    return { success: true };
   } catch (error) {
     console.error("Error fetching data:", error);
-    throw error;
+    return { success: false };
   }
 };

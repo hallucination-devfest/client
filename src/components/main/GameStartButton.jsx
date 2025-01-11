@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { fetchUserName } from "../../api/user";
 import { createRoom } from "../../api/rooms";
 import { useDispatch } from "react-redux";
+import Modal from "../common/Modal/Modal";
 
 export default function GameStartButton() {
+  const [modalState, setModalState] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState(
@@ -37,19 +39,31 @@ export default function GameStartButton() {
   }, []);
 
   const handleClick = async () => {
-    try {
-      const response = await dispatch(createRoom());
-      console.log("response:", response);
+    const response = await dispatch(createRoom());
+    console.log("response", response);
+    if (!response.success) {
+      setModalState(true);
+    } else {
       navigate("/game");
-    } catch (error) {
-      console.error("Failed to create room:", error);
     }
+  };
+
+  const FailModal = () => {
+    return (
+      <Modal
+        type="basic"
+        title="기회를 모두 소진하였습니다."
+        content="hallucination 부스로 오시면 기회를 드립니다!"
+        onClose={() => setModalState(false)}
+      />
+    );
   };
 
   return (
     <S.Container>
       <p>{username}님, 환영합니다!</p>
       <S.ButtonContainer onClick={handleClick}>게임 시작하기</S.ButtonContainer>
+      {modalState && <FailModal />}
     </S.Container>
   );
 }
