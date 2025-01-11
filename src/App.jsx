@@ -6,7 +6,7 @@ import MainPage from "./pages/main/MainPage.jsx";
 
 const Wrapper = styled.div`
   margin: 0 auto;
-  max-width: 500px;
+  max-width: 400px;
   height: 100vh;
   display: flex;
   flex-direction: column;
