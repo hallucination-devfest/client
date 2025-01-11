@@ -61,4 +61,11 @@ export const BottomLayout = styled.div`
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fontSizes.md};
   padding: 30px;
+  position: relative;
+`;
+
+export const BottomInfoIcon = styled.div`
+  position: absolute;
+  right: 30px;
+  bottom: 25px;
 `;
