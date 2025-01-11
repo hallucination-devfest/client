@@ -14,7 +14,7 @@ import {
   updateAgentSelectionComplete,
 } from "../../redux/gameSlice";
 
-const API_URL = import.meta.env.VITE_AI_API_URL;
+const API_URL = import.meta.env.VITE_AI_API_URL + "/ligent/introduce";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_SERVER_URL;
 
 function GameMainPage() {
@@ -39,11 +39,11 @@ function GameMainPage() {
   const fetchAgentResponse = async (agentId) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      const response = await fetch(API_URL, {
+      const response = await fetch(API_URL + "/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`, 
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
           roomId: roomId,
@@ -67,10 +67,15 @@ function GameMainPage() {
 
   const checkLiarSelection = async (lierId) => {
     try {
+      const accessToken = localStorage.getItem("accessToken");
       const response = await fetch(
         `${BACKEND_URL}/rooms/${roomId}/lier/${lierId}`,
         {
           method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
       );
 
@@ -91,7 +96,7 @@ function GameMainPage() {
 
     if (selectedAgentId) {
       const result = await checkLiarSelection(selectedAgentId);
-      setSelectionResult(result?.correct ?? false);
+      setSelectionResult(result?.data?.isSuccess ?? false);
     } else {
       setSelectionResult(false);
     }

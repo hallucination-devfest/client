@@ -80,7 +80,7 @@ const initialState = {
   category: "장소",
   maxZIndex: 1,
   agentSelectionComplete: false,
-  roomId: 7,
+  roomId: 15,
 };
 
 export const gameSlice = createSlice({
