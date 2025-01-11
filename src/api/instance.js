@@ -12,13 +12,6 @@ const defaultInstance = axios.create({
   withCredentials: true, // Refresh 토큰 처리를 위한 옵션
 });
 
-const aiInstance = axios.create({
-  baseURL: AI_BASE_URL,
-  withCredentials: true, // Refresh 토큰 처리를 위한 옵션
-});
-
-applyInterceptors(aiInstance);
-
 // 추가 API 인스턴스
 const createInstance = (baseInstance, path) => {
   const instance = axios.create(baseInstance.defaults);
@@ -31,4 +24,4 @@ applyInterceptors(roomsInstance);
 const userInstance = createInstance(defaultInstance, "/users");
 applyInterceptors(userInstance);
 
-export { defaultInstance, roomsInstance, userInstance, aiInstance };
+export { defaultInstance, roomsInstance, userInstance };

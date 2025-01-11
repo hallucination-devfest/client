@@ -4,8 +4,8 @@ const initialState = {
   agents: [
     {
       id: 1,
-      name: "ACE",
-      image: "/agents/ACE.png",
+      name: "MARK",
+      image: "/agents/MARK.png",
       currentChat: "",
       isLiar: false,
       zIndex: 1,
@@ -13,6 +13,15 @@ const initialState = {
     },
     {
       id: 2,
+      name: "CHLOE",
+      image: "/agents/CHLOE.png",
+      currentChat: "",
+      isLiar: false,
+      zIndex: 1,
+      hasClicked: false,
+    },
+    {
+      id: 3,
       name: "AIDEN",
       image: "/agents/AIDEN.png",
       currentChat: "",
@@ -21,18 +30,9 @@ const initialState = {
       hasClicked: false,
     },
     {
-      id: 3,
-      name: "ALEX",
-      image: "/agents/ALEX.png",
-      currentChat: "",
-      isLiar: false,
-      zIndex: 1,
-      hasClicked: false,
-    },
-    {
       id: 4,
-      name: "ANDEW",
-      image: "/agents/ANDEW.png",
+      name: "ACE",
+      image: "/agents/ACE.png",
       currentChat: "",
       isLiar: false,
       zIndex: 1,
@@ -40,8 +40,8 @@ const initialState = {
     },
     {
       id: 5,
-      name: "CHLOE",
-      image: "/agents/CHLOE.png",
+      name: "ANDEW",
+      image: "/agents/ANDEW.png",
       currentChat: "",
       isLiar: false,
       zIndex: 1,
@@ -58,8 +58,8 @@ const initialState = {
     },
     {
       id: 7,
-      name: "JACE",
-      image: "/agents/JACE.png",
+      name: "ALEX",
+      image: "/agents/ALEX.png",
       currentChat: "",
       isLiar: false,
       zIndex: 1,
@@ -67,8 +67,8 @@ const initialState = {
     },
     {
       id: 8,
-      name: "MARK",
-      image: "/agents/MARK.png",
+      name: "JACE",
+      image: "/agents/JACE.png",
       chattings: [],
       isLiar: false,
       zIndex: 1,
@@ -94,6 +94,11 @@ export const gameSlice = createSlice({
         agent.currentChat = message;
       }
     },
+    setRemainingChats: (state, action) => {
+      const { message } = action.payload;
+      state.remainingChats = message;
+    },
+
     decreaseRemainingChats: (state) => {
       if (state.remainingChats > 0) {
         state.remainingChats -= 1;
@@ -151,6 +156,10 @@ export const gameSlice = createSlice({
       const { message } = action.payload;
       state.currentRound = message;
     },
+    updateCurrentCategory: (state, action) => {
+      const { message } = action.payload;
+      state.category = message;
+    },
   },
 });
 
@@ -164,6 +173,10 @@ export const {
   updateZIndex,
   updateHasClicked,
   updateAgentSelectionComplete,
+  updateRoomId,
+  updateCurrentRound,
+  updateCurrentCategory,
+  setRemainingChats,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

@@ -4,9 +4,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   p {
     color: white;
+    font-size: 16px;
   }
 `;
 
@@ -22,4 +23,5 @@ export const ButtonContainer = styled.div`
   align-items: center;
   position: relative;
   cursor: pointer;
+  font-size: 16px;
 `;

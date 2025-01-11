@@ -27,7 +27,6 @@ function GameMainPage() {
     (state) => state.game.agentSelectionComplete
   );
   const roomId = useSelector((state) => state.game.roomId);
-
   const [infoModalState, setInfoModalState] = useState(true);
   const [choiceModalState, setChoiceModalState] = useState(false);
   const [selectedAgentName, setSelectedAgentName] = useState("");
@@ -43,7 +42,7 @@ function GameMainPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`, 
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
           roomId: roomId,
