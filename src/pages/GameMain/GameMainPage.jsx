@@ -38,10 +38,12 @@ function GameMainPage() {
 
   const fetchAgentResponse = async (agentId) => {
     try {
+      const accessToken = localStorage.getItem("accessToken");
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`, 
         },
         body: JSON.stringify({
           roomId: roomId,
