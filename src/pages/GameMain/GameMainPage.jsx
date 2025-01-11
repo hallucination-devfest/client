@@ -6,7 +6,13 @@ import GuideModal from "../../components/gameMain/Modal/GuideModal";
 import ChoiceModal from "../../components/gameMain/Modal/ChoiceModal";
 import AgentProfile from "../../components/common/AgentProfile/AgentProfile";
 import ResultModal from "../../components/gameMain/Modal/ResultModal";
-import { updateChat, clearChat, updateZIndex } from "../../redux/gameSlice";
+import {
+  updateChat,
+  clearChat,
+  updateZIndex,
+  updateHasClicked,
+  updateAgentSelectionComplete,
+} from "../../redux/gameSlice";
 
 function GameMainPage() {
   const dispatch = useDispatch();
@@ -14,35 +20,39 @@ function GameMainPage() {
   const currentRound = useSelector((state) => state.game.currentRound);
   const category = useSelector((state) => state.game.category);
   const remainingChats = useSelector((state) => state.game.remainingChats);
+  const agentSelectionComplete = useSelector(
+    (state) => state.game.agentSelectionComplete
+  );
 
   const [infoModalState, setInfoModalState] = useState(true);
   const [choiceModalState, setChoiceModalState] = useState(false);
   const [selectedAgentName, setSelectedAgentName] = useState("");
   const [resultModalState, setResultModalState] = useState(false);
   const [guideModalState, setGuideModalState] = useState(false);
-  const [clickedAgents, setClickedAgents] = useState(new Set());
-  const [isTimeoutComplete, setIsTimeoutComplete] = useState(false);
 
   const agentPick = () => {
     setChoiceModalState(false);
     setResultModalState(true);
   };
+
   const handleAgentClick = (agentId) => {
-    if (!isTimeoutComplete) {
-      if (clickedAgents.has(agentId)) {
+    const agent = agents.find((agent) => agent.id === agentId);
+
+    if (!agentSelectionComplete) {
+      const clickedCount = agents.filter((a) => a.hasClicked).length + 1;
+      if (agent?.hasClicked) {
         return;
       }
-
-      setClickedAgents((prev) => new Set(prev).add(agentId));
       dispatch(updateZIndex({ agentId }));
       dispatch(updateChat({ agentId, message: "test123" }));
+      dispatch(updateHasClicked({ agentId }));
 
       setTimeout(() => {
         dispatch(clearChat({ agentId }));
 
-        if (clickedAgents.size + 1 === agents.length) {
+        if (clickedCount === agents.length) {
           setGuideModalState(true);
-          setIsTimeoutComplete(true);
+          dispatch(updateAgentSelectionComplete({ completed: true }));
         }
       }, 3000);
     } else {
@@ -76,14 +86,14 @@ function GameMainPage() {
                 agentName={agent.name}
                 imgSrc={agent.image}
                 onClick={() => {
-                  //setChoiceModalState(true);
                   handleAgentClick(agent.id);
                   setSelectedAgentName(agent.name);
                 }}
                 currentChat={agent.currentChat}
                 agentIdx={idx}
-                //onClick={() => handleAgentClick(agent.id)}
                 zIndex={agent.zIndex}
+                color="white"
+                hasClicked={agent.hasClicked}
               />
             ))}
           </S.GridLayout>

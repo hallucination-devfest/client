@@ -9,6 +9,7 @@ const initialState = {
       currentChat: "",
       isLiar: false,
       zIndex: 1,
+      hasClicked: false,
     },
     {
       id: 2,
@@ -17,6 +18,7 @@ const initialState = {
       currentChat: "",
       isLiar: false,
       zIndex: 1,
+      hasClicked: false,
     },
     {
       id: 3,
@@ -25,6 +27,7 @@ const initialState = {
       currentChat: "",
       isLiar: false,
       zIndex: 1,
+      hasClicked: false,
     },
     {
       id: 4,
@@ -33,6 +36,7 @@ const initialState = {
       currentChat: "",
       isLiar: false,
       zIndex: 1,
+      hasClicked: false,
     },
     {
       id: 5,
@@ -41,6 +45,7 @@ const initialState = {
       currentChat: "",
       isLiar: false,
       zIndex: 1,
+      hasClicked: false,
     },
     {
       id: 6,
@@ -49,6 +54,7 @@ const initialState = {
       currentChat: "",
       isLiar: false,
       zIndex: 1,
+      hasClicked: false,
     },
     {
       id: 7,
@@ -57,6 +63,7 @@ const initialState = {
       currentChat: "",
       isLiar: false,
       zIndex: 1,
+      hasClicked: false,
     },
     {
       id: 8,
@@ -65,12 +72,14 @@ const initialState = {
       chattings: [],
       isLiar: false,
       zIndex: 1,
+      hasClicked: false,
     },
   ],
   remainingChats: 3,
   currentRound: 1,
   category: "장소",
   maxZIndex: 1,
+  agentSelectionComplete: false,
 };
 
 export const gameSlice = createSlice({
@@ -122,6 +131,17 @@ export const gameSlice = createSlice({
         agent.zIndex = state.maxZIndex;
       }
     },
+    updateHasClicked: (state, action) => {
+      const { agentId } = action.payload;
+      const agent = state.agents.find((a) => a.id === agentId);
+      if (agent) {
+        agent.hasClicked = true;
+      }
+    },
+    updateAgentSelectionComplete: (state, action) => {
+      const { completed } = action.payload;
+      state.agentSelectionComplete = completed;
+    },
   },
 });
 
@@ -133,6 +153,8 @@ export const {
   updateAgentInfo,
   clearChat,
   updateZIndex,
+  updateHasClicked,
+  updateAgentSelectionComplete,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
