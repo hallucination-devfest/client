@@ -8,6 +8,7 @@ import MainPage from "./pages/main/MainPage.jsx";
 import GameMainPage from "./pages/GameMain/GameMainPage.jsx";
 import ChattingPage from "./pages/Chatting/ChattingPage.jsx";
 import SocialLoginPageAfter from "./pages/Login/socialLoginPageAfter.jsx";
+import Retry from "./pages/Retry.jsx";
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -34,6 +35,7 @@ function App() {
                 path="/auth/user/kakao"
                 element={<SocialLoginPageAfter />}
               />
+              <Route path="/retry" element={<Retry />} />
             </Routes>
           </BrowserRouter>
         </Provider>
