@@ -92,7 +92,8 @@ function GameMainPage() {
                 currentChat={agent.currentChat}
                 agentIdx={idx}
                 zIndex={agent.zIndex}
-                color={({ theme }) => (agent.hasClicked ? "blue" : "white")}
+                color="white"
+                hasClicked={agent.hasClicked}
               />
             ))}
           </S.GridLayout>
