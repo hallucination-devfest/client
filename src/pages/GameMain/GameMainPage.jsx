@@ -57,13 +57,13 @@ function GameMainPage() {
                 key={agent.id}
                 agentName={agent.name}
                 imgSrc={agent.image}
-                // onClick={() => {
-                //   setChoiceModalState(true);
-                //   setSelectedAgentName(agent.name);
-                // }}
+                onClick={() => {
+                  setChoiceModalState(true);
+                  setSelectedAgentName(agent.name);
+                }}
                 currentChat={agent.currentChat}
                 agentIdx={idx}
-                onClick={() => handleAgentClick(agent.id)}
+                // onClick={() => handleAgentClick(agent.id)}
                 zIndex={agent.zIndex}
               />
             ))}

@@ -4,7 +4,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   h1 {
     font-size: 16px;
     font-family: "Press Start 2P";

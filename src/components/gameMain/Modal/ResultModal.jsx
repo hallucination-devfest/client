@@ -1,65 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "./ResultModal.styles";
 import Modal from "../../common/Modal/Modal";
-import { useNavigate } from "react-router-dom";
 import AgentProfile from "../../common/AgentProfile/AgentProfile";
+import AnswerModal from "./AnswerModal";
 
-function ResultModal({ modalState, setModalState, result, name }) {
-  const navigate = useNavigate();
-  let title;
-  let handleNext;
-  let stamp;
-
-  if (result === "success") {
-    title = "YOU WIN!";
-    handleNext = () => {
-      setModalState(false);
-      navigate("/game");
-    };
-    stamp = "/censoredStamp.png";
-  } else if (result === "failed") {
-    title = "YOU LOSE!";
-    handleNext = () => {
-      navigate("/");
-    };
-    stamp = "/failedStamp.png";
-  }
-
-  const Content = () => {
-    return (
-      <S.Content>
-        <S.Stamp src={stamp} alt="stamp" />
-        <AgentProfile
-          imgSrc={`/agents/${name}.png`}
-          agentName={name}
-          color="black"
-        />
-        {result === "success" && (
+const Content = ({ result, name, inputValue, setInputValue }) => {
+  console.log("hi");
+  return (
+    <S.Content>
+      <S.Stamp
+        src={result === "success" ? "/censoredStamp.png" : "/failedStamp.png"}
+        alt="stamp"
+      />
+      <AgentProfile
+        imgSrc={`/agents/${name}.png`}
+        agentName={name}
+        color="black"
+      />
+      {result === "success" && (
+        <>
           <p>
             라이전트 검거를 성공하셨습니다! <br />
-            다음 라운드를 도전하세요!
+            다음 라운드를 도전하세요! 제시어를 맞히면 다음 라운드로 넘어갈 수
+            있습니다!
           </p>
-        )}
-        {result === "failed" && (
-          <p>
-            라이전트 검거에 실패하였습니다. 재도전을 원할 경우, hallucination
-            부스를 방문하여 QR 코드를 인식해주세요!
-          </p>
-        )}
-      </S.Content>
-    );
+          <S.Input
+            type="text"
+            placeholder="제시어를 입력하세요!"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+        </>
+      )}
+      {result === "failed" && (
+        <p>
+          라이전트 검거에 실패하였습니다. 재도전을 원할 경우, hallucination
+          부스를 방문하여 QR 코드를 인식해주세요!
+        </p>
+      )}
+    </S.Content>
+  );
+};
+
+function ResultModal({ modalState, setModalState, result, name }) {
+  const [inputValue, setInputValue] = useState("");
+  const [answerModalState, setAnswerModalState] = useState(false); // 정답/오답 모달 상태
+  const [isCorrect, setIsCorrect] = useState(false); // 정답 여부
+  const checkAnswer = () => {
+    const correctAnswer = "정답"; // 정답 설정
+    if (inputValue.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+      setIsCorrect(true);
+    } else {
+      setIsCorrect(false);
+    }
+
+    setAnswerModalState(true);
   };
+
   return (
     <>
       {modalState && (
         <Modal
-          title={title}
+          title={result === "success" ? "YOU WIN!" : "YOU LOSE!"}
           type="result"
-          handleNext={handleNext}
+          handleNext={checkAnswer}
           onClose={() => setModalState(false)}
-          content={<Content />}
+          content={
+            <Content
+              result={result}
+              name={name}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+            />
+          }
         />
       )}
+      {/* AnswerModal 연결 */}
+      <AnswerModal
+        isCorrect={isCorrect}
+        modalState={answerModalState}
+        setModalState={(state) => {
+          setAnswerModalState(state);
+          setModalState(state);
+        }}
+      />
     </>
   );
 }

@@ -41,6 +41,7 @@ export const Title = styled.h1`
   font-style: normal;
   font-weight: 700;
   line-height: 130%;
+  word-break: keep-all;
 `;
 
 export const Content = styled.div``;

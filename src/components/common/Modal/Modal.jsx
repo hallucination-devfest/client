@@ -12,6 +12,7 @@ export default function Modal({
   // type basic : title, content, onClose
   // type choise : content, onChat, onPick, onClose
   // type result : title, context, handleNext
+  // type guess : title, context, handleNext
 
   return (
     <S.Container>
@@ -38,6 +39,13 @@ export default function Modal({
             <S.SpecialTitle>{title}</S.SpecialTitle>
             <S.Content>{content}</S.Content>
             <S.Button onClick={handleNext}>이동하기</S.Button>
+          </S.ContentContainer>
+        )}
+        {type === "guess" && (
+          <S.ContentContainer>
+            <S.SpecialTitle>{title}</S.SpecialTitle>
+            <S.Content>{content}</S.Content>
+            <S.Button onClick={handleNext}>입력하기</S.Button>
           </S.ContentContainer>
         )}
       </S.ModalContainer>
