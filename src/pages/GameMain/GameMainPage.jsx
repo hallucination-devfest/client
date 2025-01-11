@@ -15,6 +15,7 @@ import {
 } from "../../redux/gameSlice";
 
 const API_URL = import.meta.env.VITE_AI_API_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_SERVER_URL;
 
 function GameMainPage() {
   const dispatch = useDispatch();
@@ -30,8 +31,10 @@ function GameMainPage() {
   const [infoModalState, setInfoModalState] = useState(true);
   const [choiceModalState, setChoiceModalState] = useState(false);
   const [selectedAgentName, setSelectedAgentName] = useState("");
+  const [selectedAgentId, setSelectedAgentId] = useState(null);
   const [resultModalState, setResultModalState] = useState(false);
   const [guideModalState, setGuideModalState] = useState(false);
+  const [selectionResult, setSelectionResult] = useState(null);
 
   const fetchAgentResponse = async (agentId) => {
     try {
@@ -60,8 +63,37 @@ function GameMainPage() {
     }
   };
 
-  const agentPick = () => {
+  const checkLiarSelection = async (lierId) => {
+    try {
+      const response = await fetch(
+        `${BACKEND_URL}/rooms/${roomId}/lier/${lierId}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to check liar selection");
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Failed to check liar selection:", error);
+      return null;
+    }
+  };
+
+  const agentPick = async () => {
     setChoiceModalState(false);
+
+    if (selectedAgentId) {
+      const result = await checkLiarSelection(selectedAgentId);
+      setSelectionResult(result?.correct ?? false);
+    } else {
+      setSelectionResult(false);
+    }
+
     setResultModalState(true);
   };
 
@@ -75,9 +107,8 @@ function GameMainPage() {
       }
 
       dispatch(updateZIndex({ agentId }));
-
       dispatch(updateHasClicked({ agentId }));
-      // Fetch and update chat message
+
       const chatContent = await fetchAgentResponse(agentId);
       if (chatContent) {
         dispatch(updateChat({ agentId, message: chatContent }));
@@ -93,6 +124,7 @@ function GameMainPage() {
       }, 3000);
     } else {
       setChoiceModalState(true);
+      setSelectedAgentId(agentId);
       setSelectedAgentName(agents.find((agent) => agent.id === agentId)?.name);
     }
   };
@@ -146,7 +178,7 @@ function GameMainPage() {
           <ResultModal
             modalState={resultModalState}
             setModalState={setResultModalState}
-            result="success"
+            result={selectionResult ? "success" : "fail"}
             name={selectedAgentName}
           />
         )}
