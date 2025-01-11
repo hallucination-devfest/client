@@ -19,9 +19,9 @@ export const ImageContainer = styled.div`
 `;
 export const NameContainer = styled.div`
   padding-top: 10px;
-  color: #fff;
+  color: ${({ $color }) => ($color ? $color : "white")};
   text-align: center;
-  font-family: "NeoDunggeunmo", cursive;
+  font-family: "Press Start 2P";
   letter-spacing: 0.2em;
   font-size: ${({ theme }) => theme.fontSizes.md};
   font-style: normal;

@@ -1,6 +1,5 @@
 import React from "react";
 import * as S from "./MainPage.styles";
-
 import KakaoButton from "../../components/common/KakaoButton/KakaoButton";
 
 function MainPage() {

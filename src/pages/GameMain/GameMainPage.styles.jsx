@@ -56,9 +56,22 @@ export const GridLayout = styled.div`
 `;
 
 export const BottomLayout = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+`;
+
+export const InfoIcon = styled.img`
+  width: 20px;
+  position: absolute;
+  right: 30px;
+`;
+
+export const BottomContent = styled.p`
   font-family: "NeoDunggeunmo", cursive;
   text-align: center;
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fontSizes.md};
-  padding: 30px;
 `;
