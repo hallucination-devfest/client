@@ -18,14 +18,15 @@ function Retry() {
         }
 
         const response = await axios.patch(
-          `${API_URL}/users`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`, 
-              "Content-Type": "application/json",
-            },
-          }
-        );
+            `${API_URL}/users`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`, 
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
         console.log("PATCH 요청 성공:", response.data);
         navigate("/");
