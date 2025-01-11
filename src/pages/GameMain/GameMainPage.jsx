@@ -14,6 +14,8 @@ import {
   updateAgentSelectionComplete,
 } from "../../redux/gameSlice";
 
+const API_URL = import.meta.env.VITE_AI_API_URL;
+
 function GameMainPage() {
   const dispatch = useDispatch();
   const agents = useSelector((state) => state.game.agents);
@@ -23,6 +25,7 @@ function GameMainPage() {
   const agentSelectionComplete = useSelector(
     (state) => state.game.agentSelectionComplete
   );
+  const roomId = useSelector((state) => state.game.roomId);
 
   const [infoModalState, setInfoModalState] = useState(true);
   const [choiceModalState, setChoiceModalState] = useState(false);
@@ -30,12 +33,39 @@ function GameMainPage() {
   const [resultModalState, setResultModalState] = useState(false);
   const [guideModalState, setGuideModalState] = useState(false);
 
+  const fetchAgentResponse = async (agentId) => {
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          roomId: roomId,
+          characterId: agentId,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        return data.responseDto.chatContent;
+      } else {
+        console.error("API Error:", data.error);
+        return null;
+      }
+    } catch (error) {
+      console.error("Failed to fetch agent response:", error);
+      return null;
+    }
+  };
+
   const agentPick = () => {
     setChoiceModalState(false);
     setResultModalState(true);
   };
 
-  const handleAgentClick = (agentId) => {
+  const handleAgentClick = async (agentId) => {
     const agent = agents.find((agent) => agent.id === agentId);
 
     if (!agentSelectionComplete) {
@@ -43,9 +73,15 @@ function GameMainPage() {
       if (agent?.hasClicked) {
         return;
       }
+
       dispatch(updateZIndex({ agentId }));
-      dispatch(updateChat({ agentId, message: "test123" }));
+
       dispatch(updateHasClicked({ agentId }));
+      // Fetch and update chat message
+      const chatContent = await fetchAgentResponse(agentId);
+      if (chatContent) {
+        dispatch(updateChat({ agentId, message: chatContent }));
+      }
 
       setTimeout(() => {
         dispatch(clearChat({ agentId }));

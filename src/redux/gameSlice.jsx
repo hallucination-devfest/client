@@ -80,6 +80,7 @@ const initialState = {
   category: "장소",
   maxZIndex: 1,
   agentSelectionComplete: false,
+  roomId: 7,
 };
 
 export const gameSlice = createSlice({
@@ -141,6 +142,14 @@ export const gameSlice = createSlice({
     updateAgentSelectionComplete: (state, action) => {
       const { completed } = action.payload;
       state.agentSelectionComplete = completed;
+    },
+    updateRoomId: (state, action) => {
+      const { message } = action.payload;
+      state.roomId = message;
+    },
+    updateCurrentRound: (state, action) => {
+      const { message } = action.payload;
+      state.currentRound = message;
     },
   },
 });
