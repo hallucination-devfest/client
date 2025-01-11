@@ -71,7 +71,7 @@ export const CharacterName = styled.div`
 
 export const ChattingSpace = styled.div`
     width: 100%;
-    height: 55%;
+    height: 500px;
     display: flex;
     flex-direction: column;
     padding-left: 20px;
@@ -87,7 +87,6 @@ export const MyChat = styled.div`
     border-radius: 15px;
     color: white;
     font-size: 15px;
-    display: flex;
     align-items: center;
     //justify-content: flex-end;
     margin-top: 10px;
@@ -104,7 +103,6 @@ export const AIChat = styled.div`
     border-radius: 15px;
     color: black;
     font-size: 15px;
-    display: flex;
     align-items: start;
     margin-top: 10px;
     margin-bottom: 10px;

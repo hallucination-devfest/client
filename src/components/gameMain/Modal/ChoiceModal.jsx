@@ -1,36 +1,43 @@
 import React from "react";
 import * as S from "./ChoiceModal.styles";
 import Modal from "../../common/Modal/Modal";
-import AgentMiniProfile from "../../common/AgentProfile/AgentMiniProfile";
+import AgentProfile from "../../common/AgentProfile/AgentProfile";
 import { useNavigate } from "react-router-dom";
 
-const Content = ({ name }) => {
-  return (
-    <S.Content>
-      <AgentMiniProfile
-        imgSrc={`/agents/${name}.png`}
-        agentName={name}
-        color="black"
-      />
-      <p>
-        {name}를 선택하셨습니다. <br />
-        {name}와 채팅 또는 지목하시겠습니까?
-      </p>
-    </S.Content>
-  );
-};
-
-function ChoiceModal({ setModalState, name, onPick }) {
+function ChoiceModal({ modalState, setModalState, name, onPick }) {
   const navigate = useNavigate();
-
+  const Content = () => {
+    return (
+      <S.Content>
+        <AgentProfile
+          imgSrc={`/agents/${name}.png`}
+          agentName={name}
+          color="black"
+          disableClickMessage={true}
+        />
+        <p>
+          {name}를 선택하셨습니다. <br />
+          {name}와 채팅 또는 지목하시겠습니까?
+        </p>
+      </S.Content>
+    );
+  };
   return (
-    <Modal
-      type="choice"
-      onChat={() => navigate("/chatting")}
-      onPick={onPick}
-      onClose={() => setModalState(false)}
-      content={<Content name={name} />}
-    />
+    <>
+      {modalState && (
+        <Modal
+          type="choice"
+          onChat={() =>
+            navigate("/chatting", {
+              state: { agentName: name }, 
+            })
+          }
+          onPick={onPick}
+          onClose={() => setModalState(false)}
+          content={<Content />}
+        />
+      )}
+    </>
   );
 }
 // onChat, onPick 부분 수정
