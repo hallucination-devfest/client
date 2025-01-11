@@ -6,7 +6,7 @@ import AgentProfile from "../../components/common/AgentProfile/AgentProfile";
 
 function ChattingPage() {
     const navigate = useNavigate();
-    
+
     const agents = useSelector((state) => state.game.agents);
     const currentRound = useSelector((state) => state.game.currentRound);
     const category = useSelector((state) => state.game.category);
@@ -15,7 +15,7 @@ function ChattingPage() {
     const specificAgent = agents.find((agent) => agent.name === "MARK");
 
     const handleBack = () => {
-        navigate("/game");
+        navigate(-1);
       };
 
     return (
