@@ -1,6 +1,7 @@
 import { sendRequest } from "./request";
 import { roomsInstance } from "./instance";
 import {
+  resetGame,
   updateRoomId,
   updateCurrentRound,
   updateCurrentCategory,
@@ -15,6 +16,7 @@ export const createRoom = () => async (dispatch) => {
     const category = response.data.data.category;
     const remainingChats = response.data.data.chatCount;
     // Redux 상태 업데이트
+    dispatch(resetGame());
     dispatch(updateRoomId({ message: roomId }));
     dispatch(updateCurrentRound({ message: roundId }));
     dispatch(updateCurrentCategory({ message: category }));
