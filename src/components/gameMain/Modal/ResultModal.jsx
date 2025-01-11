@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import * as S from "./ResultModal.styles";
 import Modal from "../../common/Modal/Modal";
 import AgentProfile from "../../common/AgentProfile/AgentProfile";
 import AnswerModal from "./AnswerModal";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_SERVER_URL;
+
 const Content = ({ result, name, inputValue, setInputValue }) => {
-  console.log("hi");
   return (
     <S.Content>
       <S.Stamp
@@ -45,17 +47,39 @@ const Content = ({ result, name, inputValue, setInputValue }) => {
 
 function ResultModal({ modalState, setModalState, result, name }) {
   const [inputValue, setInputValue] = useState("");
-  const [answerModalState, setAnswerModalState] = useState(false); // 정답/오답 모달 상태
-  const [isCorrect, setIsCorrect] = useState(false); // 정답 여부
-  const checkAnswer = () => {
-    const correctAnswer = "정답"; // 정답 설정
-    if (inputValue.trim().toLowerCase() === correctAnswer.toLowerCase()) {
-      setIsCorrect(true);
-    } else {
-      setIsCorrect(false);
-    }
+  const [answerModalState, setAnswerModalState] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const roomId = useSelector((state) => state.game.roomId);
 
-    setAnswerModalState(true);
+  const checkAnswer = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await fetch(`${BACKEND_URL}/rooms/${roomId}/keyword`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          keyword: inputValue.trim(),
+        }),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok && responseData.success) {
+        setIsCorrect(responseData.data.isSuccess);
+        setAnswerModalState(true);
+      } else {
+        console.error("Failed to check keyword:", responseData.error);
+        setIsCorrect(false);
+        setAnswerModalState(true);
+      }
+    } catch (error) {
+      console.error("Error checking keyword:", error);
+      setIsCorrect(false);
+      setAnswerModalState(true);
+    }
   };
 
   return (
@@ -76,7 +100,6 @@ function ResultModal({ modalState, setModalState, result, name }) {
           }
         />
       )}
-      {/* AnswerModal 연결 */}
       <AnswerModal
         isCorrect={isCorrect}
         modalState={answerModalState}
