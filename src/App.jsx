@@ -3,6 +3,7 @@ import { GlobalStyle } from "./styles/globalStyle.js";
 import { theme } from "./styles/theme.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/main/MainPage.jsx";
+import GameMainPage from "./pages/GameMain/GameMainPage.jsx";
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -22,6 +23,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/main" element={<MainPage />} />
+            <Route path="/game" element={<GameMainPage />} />
           </Routes>
         </BrowserRouter>
       </Wrapper>

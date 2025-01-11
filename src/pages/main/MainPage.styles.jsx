@@ -29,11 +29,11 @@ export const Main = styled.h1`
 `;
 
 export const BackImage = styled.div`
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%); // 가운데 정렬을 위해 추가
   position: absolute;
-  width: 100%;
+  width: 120%;
   max-height: 250px;
   object-fit: cover;
   > img {
