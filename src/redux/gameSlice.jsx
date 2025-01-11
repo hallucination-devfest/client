@@ -61,8 +61,8 @@ const initialState = {
     {
       id: 8,
       name: "MARK",
-      image: "/agents/Mark.png",
-      currentChat: "",
+      image: "/agents/MARK.png",
+      chattings: [],
       isLiar: false,
       zIndex: 1,
     },
