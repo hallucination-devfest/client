@@ -30,4 +30,5 @@ export const Container = styled.div`
   justify-content: space-evenly;
   align-items: center;
   position: relative;
+  cursor: pointer;
 `;

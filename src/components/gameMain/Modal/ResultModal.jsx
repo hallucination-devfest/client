@@ -16,7 +16,7 @@ const Content = ({ result, name, inputValue, setInputValue }) => {
         imgSrc={`/agents/${name}.png`}
         agentName={name}
         color="black"
-        disableClickMessage = {true}
+        disableClickMessage={true}
       />
       {result === "success" && (
         <>

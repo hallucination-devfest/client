@@ -7,6 +7,7 @@ import { store } from "./redux/store.jsx";
 import MainPage from "./pages/main/MainPage.jsx";
 import GameMainPage from "./pages/GameMain/GameMainPage.jsx";
 import ChattingPage from "./pages/Chatting/ChattingPage.jsx";
+import SocialLoginPageAfter from "./pages/Login/socialLoginPageAfter.jsx";
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -29,6 +30,10 @@ function App() {
               <Route path="/main" element={<MainPage />} />
               <Route path="/game" element={<GameMainPage />} />
               <Route path="/chatting" element={<ChattingPage />} />
+              <Route
+                path="/auth/user/kakao"
+                element={<SocialLoginPageAfter />}
+              />
             </Routes>
           </BrowserRouter>
         </Provider>

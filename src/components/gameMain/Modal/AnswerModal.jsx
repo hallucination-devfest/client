@@ -1,5 +1,4 @@
 import React from "react";
-import * as S from "./ResultModal.styles";
 import Modal from "../../common/Modal/Modal";
 import { useNavigate } from "react-router-dom";
 
