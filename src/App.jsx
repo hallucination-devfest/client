@@ -2,6 +2,8 @@ import styled, { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/globalStyle.js";
 import { theme } from "./styles/theme.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./redux/store.jsx";
 import MainPage from "./pages/main/MainPage.jsx";
 import GameMainPage from "./pages/GameMain/GameMainPage.jsx";
 
@@ -19,13 +21,15 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Wrapper>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/main" element={<MainPage />} />
-            <Route path="/game" element={<GameMainPage />} />
-          </Routes>
-        </BrowserRouter>
+        <Provider store={store}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/main" element={<MainPage />} />
+              <Route path="/game" element={<GameMainPage />} />
+            </Routes>
+          </BrowserRouter>
+        </Provider>
       </Wrapper>
     </ThemeProvider>
   );
