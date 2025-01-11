@@ -40,13 +40,14 @@ export const Title = styled.h1`
   font-style: normal;
   font-weight: 700;
   line-height: 130%;
+  word-break: keep-all;
 `;
 
 export const Content = styled.div``;
 
 export const Button = styled.button`
   display: flex;
-  padding: 10px 40px;
+  padding: 10px 20px;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -68,4 +69,11 @@ export const CloseButton = styled.img`
   top: 8px;
   right: 12px;
   cursor: pointer;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 `;
