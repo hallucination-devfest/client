@@ -26,7 +26,6 @@ export const ModalContainer = styled.div`
 
 export const ContentContainer = styled.div`
   display: flex;
-  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -41,14 +40,13 @@ export const Title = styled.h1`
   font-style: normal;
   font-weight: 700;
   line-height: 130%;
-  word-break: keep-all;
 `;
 
 export const Content = styled.div``;
 
 export const Button = styled.button`
   display: flex;
-  padding: 10px 20px;
+  padding: 10px 40px;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -61,23 +59,13 @@ export const Button = styled.button`
 export const SpecialTitle = styled.h1`
   font-size: 22px;
   font-weight: bold;
-  font-family: "Press Start 2P";
-  color: ${({ theme }) => theme.colors.yellow};
-  -webkit-text-stroke: 1px black;
+  font-family: Pretendard;
+  color: yellow;
 `;
 
 export const CloseButton = styled.img`
   position: absolute;
-  width: 30px;
-  top: 0px;
-  right: 0px;
+  top: 8px;
+  right: 12px;
   cursor: pointer;
-  z-index: 10000;
-`;
-
-export const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
 `;
