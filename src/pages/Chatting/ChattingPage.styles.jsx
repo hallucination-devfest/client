@@ -120,6 +120,7 @@ export const TextInputSpace = styled.div`
   position: relative;
   background-color: ${({ theme }) => theme.colors.indigo1};
   padding-top: 20px;
+  padding-bottom: 60px;
 `;
 
 export const BottomLayout = styled.div`
@@ -130,7 +131,7 @@ export const BottomLayout = styled.div`
   padding: 30px;
   display: flex;
   position: absolute;
-  bottom: 40px;
+  bottom: 100px;
   left: 10px;
   font-size: 14px;
 `;
