@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import * as S from "./ResultModal.styles";
 import Modal from "../../common/Modal/Modal";
 import AnswerModal from "./AnswerModal";
@@ -45,6 +46,8 @@ const Content = ({ result, name, inputValue, setInputValue }) => {
 };
 
 function ResultModal({ modalState, setModalState, result, name }) {
+  const navigate = useNavigate();
+
   const [inputValue, setInputValue] = useState("");
   const [answerModalState, setAnswerModalState] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
@@ -69,6 +72,7 @@ function ResultModal({ modalState, setModalState, result, name }) {
       if (response.ok && responseData.success) {
         setIsCorrect(responseData.data.isSuccess);
         setAnswerModalState(true);
+        //if(!isCorrect) navigate("/");
       } else {
         console.error("Failed to check keyword:", responseData.error);
         setIsCorrect(false);
