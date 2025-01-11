@@ -1,13 +1,32 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Main from "./pages/Main/Main";
+import styled, { ThemeProvider } from "styled-components";
+import { GlobalStyle } from "./styles/globalStyle.js";
+import { theme } from "./styles/theme.js";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MainPage from "./pages/main/MainPage.jsx";
 
-export default function App() {
+const Wrapper = styled.div`
+  margin: 0 auto;
+  max-width: 500px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`;
+
+function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/main" element={<Main />} />
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <Wrapper>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/main" element={<MainPage />} />
+          </Routes>
+        </BrowserRouter>
+      </Wrapper>
+    </ThemeProvider>
   );
 }
+
+export default App;
