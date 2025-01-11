@@ -72,6 +72,7 @@ export const CloseButton = styled.img`
   top: 0px;
   right: 0px;
   cursor: pointer;
+  z-index: 10000;
 `;
 
 export const ButtonContainer = styled.div`
