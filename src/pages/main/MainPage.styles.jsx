@@ -43,6 +43,9 @@ export const BackImage = styled.div`
 
 export const TextBubbleImage = styled.div`
   position: absolute;
+  transform: scale(0.25);
+  transform-origin: ${(props) =>
+    props.$left ? "top left" : props.$right ? "top right" : "top left"};
   left: ${(props) => props.$left + "px" || "none"};
   top: ${(props) => props.$top + "px" || "none"};
   right: ${(props) => props.$right + "px" || "none"};

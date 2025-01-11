@@ -1,13 +1,23 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import * as S from "./GameMainPage.styles";
 import AgentProfile from "../../components/common/AgentProfile/AgentProfile";
+import { updateChat, clearChat, updateZIndex } from "../../redux/gameSlice";
 
 function GameMainPage() {
-  // Redux store에서 필요한 상태들을 가져옵니다
+  const dispatch = useDispatch();
   const agents = useSelector((state) => state.game.agents);
   const currentRound = useSelector((state) => state.game.currentRound);
   const category = useSelector((state) => state.game.category);
   const remainingChats = useSelector((state) => state.game.remainingChats);
+
+  const handleAgentClick = (agentId) => {
+    dispatch(updateZIndex({ agentId }));
+    dispatch(updateChat({ agentId, message: "test123" }));
+
+    setTimeout(() => {
+      dispatch(clearChat({ agentId }));
+    }, 3000);
+  };
 
   return (
     <>
@@ -22,17 +32,19 @@ function GameMainPage() {
         </S.Description>
         <S.GridWrapper>
           <S.GridLayout>
-            {agents.map((agent) => (
+            {agents.map((agent, idx) => (
               <AgentProfile
                 key={agent.id}
                 agentName={agent.name}
                 imgSrc={agent.image}
-                currentChat="안녕"
+                currentChat={agent.currentChat}
+                agentIdx={idx}
+                onClick={() => handleAgentClick(agent.id)}
+                zIndex={agent.zIndex}
               />
             ))}
           </S.GridLayout>
         </S.GridWrapper>
-
         <S.BottomLayout>
           채팅 횟수: {remainingChats}회
           <S.BottomInfoIcon>
