@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./MainPage.styles";
 import KakaoButton from "../../components/common/KakaoButton/KakaoButton";
-
+import GameStartButton from "../../components/main/GameStartButton";
 function MainPage() {
+  const [isLogin, setIsLogin] = useState(
+    localStorage.getItem("isLogin") === "true"
+  );
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const loginStatus = localStorage.getItem("isLogin") === "true";
+      setIsLogin(loginStatus);
+    };
+
+    // 'storage' 이벤트 리스너 등록
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      // 이벤트 리스너 해제
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
   return (
     <S.Container>
       <S.Subtitle>거짓말 하고 있는 라이전트를 잡아라!</S.Subtitle>
@@ -11,7 +30,7 @@ function MainPage() {
         <br />
         GAME
       </S.Main>
-      <KakaoButton />
+      {isLogin ? <GameStartButton /> : <KakaoButton />}
       <S.TextBubbleImage $left={20} $top={140}>
         <img src="/MainPage_left_text_bubble.png" />
       </S.TextBubbleImage>
