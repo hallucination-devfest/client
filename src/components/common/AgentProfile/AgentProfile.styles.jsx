@@ -29,3 +29,14 @@ export const NameContainer = styled.div`
   font-weight: 400;
   line-height: 100%; /* 12px */
 `;
+export const ClickState = styled.div`
+  padding-top: 5px;
+  color: ${({ $color }) => ($color ? $color : "#FFDE5B")};
+  text-align: center;
+  font-family: "NeoDunggeunmo";
+  letter-spacing: 0.2em;
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 12px */
+`;

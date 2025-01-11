@@ -27,6 +27,7 @@ function ChattingPage() {
                     key={specificAgent.id}
                     agentName={specificAgent.name}
                     imgSrc={specificAgent.image}
+                    disableClickMessage = {true}
                 />
                 )}
             </S.CharacterSpace>
