@@ -112,6 +112,8 @@ export const gameSlice = createSlice({
       }));
     },
     resetGame: (state) => {
+      state = initialState;
+      localStorage.removeItem("persist:root");
       return initialState;
     },
     updateAgentInfo: (state, action) => {
